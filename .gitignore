@@ -1,10 +1,15 @@
-compiled/
-
 *.out
 *.bak
+
+# Ocaml files
+compiled/
 
 *.mll
 *.mli
 *.mly
 *.cmi
 *.cmo
+
+# IntelliJ files
+.idea/
+*.iml
