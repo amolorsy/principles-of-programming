@@ -1,5 +1,7 @@
 compiled/
 
+*.out
 *.bak
+
 *.cmi
 *.cmo
