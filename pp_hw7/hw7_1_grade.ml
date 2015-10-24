@@ -40,12 +40,12 @@ let table2 =
   [("empty","a",TuringMachine.Write "a", TuringMachine.Right, "carrying");
    ("carrying","a",TuringMachine.Write "a", TuringMachine.Right, "carrying")]
 let rec steps_tm n tm =
-	let tmp = (TuringMachine.step_tm tm) in
-  		if n = 0 then tm
-  			else (steps_tm (n - 1)
-				(match tmp with
-				| Some x -> x))
-  
+  let tmp = (TuringMachine.step_tm tm) in
+  if n = 0 then tm
+  else (steps_tm (n - 1)
+          (match tmp with
+           | Some x -> x))
+
 
 let tm_1 = (TuringMachine.make_tm ["a";"a";"a";"a";"a";"a";"a";"a"] "empty" table2)
 let tm_2 = (steps_tm 8 tm_1);;
@@ -53,34 +53,34 @@ let tm_2 = (steps_tm 8 tm_1);;
 print_string "Assistant's Case";;
 print_string (TuringMachine.print_tm (TuringMachine.make_tm ["e";"m";"p";"t";"y"] "empty" table2) 7);;
 let _ = output (fun () ->
- "-.-.-.a.a.a.a" = (TuringMachine.print_tm tm_1 3))
+    "-.-.-.a.a.a.a" = (TuringMachine.print_tm tm_1 3))
 let _ = output (fun () ->
- "a.a.a.-.-.-.-" = (TuringMachine.print_tm tm_2 3))
-  
+    "a.a.a.-.-.-.-" = (TuringMachine.print_tm tm_2 3))
+
 let _ = output (fun () -> 
-  Some (TuringMachine.Write "d",TuringMachine.Right,"2") = 
+    Some (TuringMachine.Write "d",TuringMachine.Right,"2") = 
     TuringMachine.match_rule "1" "a" table
-)
+  )
 let _ = output (fun () -> 
-  Some (TuringMachine.Write "e",TuringMachine.Right,"3") = 
+    Some (TuringMachine.Write "e",TuringMachine.Right,"3") = 
     TuringMachine.match_rule "2" "b" table
-)
+  )
 let _ = output (fun () -> 
-  Some (TuringMachine.Write "f",TuringMachine.Left,"4") = 
+    Some (TuringMachine.Write "f",TuringMachine.Left,"4") = 
     TuringMachine.match_rule "3" "-" table
-)
+  )
 let _ = output (fun () -> 
-  Some (TuringMachine.Write "g",TuringMachine.Left,"5") = 
+    Some (TuringMachine.Write "g",TuringMachine.Left,"5") = 
     TuringMachine.match_rule "4" "e" table
-)
+  )
 let _ = output (fun () -> 
-  Some (TuringMachine.Write "h",TuringMachine.Left,"6") = 
+    Some (TuringMachine.Write "h",TuringMachine.Left,"6") = 
     TuringMachine.match_rule "5" "d" table
-)
+  )
 let _ = output (fun () -> 
-  Some (TuringMachine.Write "i",TuringMachine.Stay,"7") = 
+    Some (TuringMachine.Write "i",TuringMachine.Stay,"7") = 
     TuringMachine.match_rule "6" "-" table
-)
+  )
 
 (* Turaing machine *)
 let _ = print_endline "Turing machine"
@@ -90,8 +90,8 @@ let rec step_n : int -> TuringMachine.tm -> TuringMachine.tm option =
     if n > 0 
     then 
       (match TuringMachine.step_tm tm with
-      | Some tm' -> step_n (n-1) tm'
-      | None -> None)
+       | Some tm' -> step_n (n-1) tm'
+       | None -> None)
     else Some tm
 
 let tm1 = TuringMachine.make_tm ["a";"b"] "1" table
@@ -106,42 +106,42 @@ let tm9 = TuringMachine.run_tm tm1
 
 let _ = output (fun () -> "-.-.a.b.-" = TuringMachine.print_tm tm1 2)
 let _ = output (fun () -> 
-  (match tm2_opt with
-  | Some tm2 -> "-.d.b.-.-" = TuringMachine.print_tm tm2 2
-  | None -> false
-  ))
+    (match tm2_opt with
+     | Some tm2 -> "-.d.b.-.-" = TuringMachine.print_tm tm2 2
+     | None -> false
+    ))
 let _ = output (fun () -> 
-  (match tm3_opt with
-  | Some tm3 -> "d.e.-.-.-" = TuringMachine.print_tm tm3 2
-  | None -> false
-  ))
+    (match tm3_opt with
+     | Some tm3 -> "d.e.-.-.-" = TuringMachine.print_tm tm3 2
+     | None -> false
+    ))
 let _ = output (fun () -> 
-  (match tm4_opt with
-  | Some tm4 -> "-.d.e.f.-" = TuringMachine.print_tm tm4 2
-  | None -> false
-  ))
+    (match tm4_opt with
+     | Some tm4 -> "-.d.e.f.-" = TuringMachine.print_tm tm4 2
+     | None -> false
+    ))
 let _ = output (fun () -> 
-  (match tm5_opt with
-  | Some tm5 -> "-.-.d.g.f" = TuringMachine.print_tm tm5 2
-  | None -> false
-  ))
+    (match tm5_opt with
+     | Some tm5 -> "-.-.d.g.f" = TuringMachine.print_tm tm5 2
+     | None -> false
+    ))
 let _ = output (fun () -> 
-  (match tm6_opt with
-  | Some tm6 -> "-.-.-.h.g" = TuringMachine.print_tm tm6 2
-  | None -> false
-  ))
+    (match tm6_opt with
+     | Some tm6 -> "-.-.-.h.g" = TuringMachine.print_tm tm6 2
+     | None -> false
+    ))
 let _ = output (fun () -> 
-  (match tm7_opt with
-  | Some tm7 -> "-.-.i.h.g" = TuringMachine.print_tm tm7 2
-  | None -> false
-  ))
+    (match tm7_opt with
+     | Some tm7 -> "-.-.i.h.g" = TuringMachine.print_tm tm7 2
+     | None -> false
+    ))
 
 (* If no rule is applicable, just do nothing. *)
 
 let _ = output (fun () -> 
-  (match tm8_opt with
-  | Some _ -> false
-  | None -> true
-  ))
+    (match tm8_opt with
+     | Some _ -> false
+     | None -> true
+    ))
 
 let _ = output (fun () -> "-.-.i.h.g" = TuringMachine.print_tm tm9 2)

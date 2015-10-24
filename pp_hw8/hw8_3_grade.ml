@@ -8,12 +8,12 @@ struct
   type t = string
   let is_eq (x:t) (y:t) : bool = x = y
 end
-  
+
 module StringSetQ = QueueMake (StringArg)
 
 let rec queue2list (q:StringSetQ.queue) : string list =
   try let (e,r) = StringSetQ.deq q in
-      e::(queue2list r)
+    e::(queue2list r)
   with StringSetQ.EMPTY_Q -> []
 
 let abc_queue = 
@@ -47,14 +47,14 @@ module StringSetQQ = QueueMake (StringSetQArg)
 
 let rec qqueue2list (qq:StringSetQQ.queue) : (string list) list =
   try let (e,r) = StringSetQQ.deq qq in
-      (queue2list e)::(qqueue2list r)
+    (queue2list e)::(qqueue2list r)
   with StringSetQQ.EMPTY_Q -> []
 
 let abc_bc_c_qqueue = 
   StringSetQQ.enq (StringSetQQ.enq (StringSetQQ.enq (StringSetQQ.emptyq, abc_queue), bc_queue), c_queue)
 let _ = output (fun () -> 
-  qqueue2list abc_bc_c_qqueue = [["a";"b";"c"];["b";"c"];["c"]]
-)
+    qqueue2list abc_bc_c_qqueue = [["a";"b";"c"];["b";"c"];["c"]]
+  )
 
 let (abc_queue,bc_c_qqueue) = StringSetQQ.deq abc_bc_c_qqueue
 let _ = output (fun () -> queue2list abc_queue = ["a";"b";"c"])
@@ -70,8 +70,8 @@ let bc_queue =
 
 let bc_c_qqueue = StringSetQQ.enq (bc_c_qqueue, bc_queue)
 let _ = output (fun () -> 
-  qqueue2list bc_c_qqueue = [["b";"c"];["c"]]
-)
+    qqueue2list bc_c_qqueue = [["b";"c"];["c"]]
+  )
 
 let (bc_queue,c_qqueue) = StringSetQQ.deq bc_c_qqueue
 let _ = output (fun () -> queue2list bc_queue = ["b";"c"])

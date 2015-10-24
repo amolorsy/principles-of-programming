@@ -5,4 +5,3 @@
 (require "hw6-1.rkt")
 
 (output (lambda () (equal? 15 (memo-ways 4 2))))
-

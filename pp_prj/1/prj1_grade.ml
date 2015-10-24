@@ -11,48 +11,48 @@ let isOnSegment ((xi:float),  (yi:float), (xj:float), (yj:float), (xk:float), (y
 let computeDirection ((xi:float), (yi:float), (xj:float), (yj:float), (xk:float), (yk:float)) =
   let a = (xk -. xi) *. (yj -. yi) in
   let b = (xj -. xi) *. (yk -. yi) in
-    if (a < b) then -1
-    else if (a > b) then 1
-    else 0
+  if (a < b) then -1
+  else if (a > b) then 1
+  else 0
 
 let doLineSegmentsIntersect ((x1:float), (y1:float), (x2:float), (y2:float), (x3:float), (y3:float), (x4:float), (y4:float)) =
   let d1 = computeDirection (x3, y3, x4, y4, x1, y1) in
   let d2 = computeDirection (x3, y3, x4, y4, x2, y2) in
   let d3 = computeDirection (x1, y1, x2, y2, x3, y3) in
   let d4 = computeDirection (x1, y1, x2, y2, x4, y4) in
-    (((d1 > 0 && d2 < 0) || (d1 < 0 && d2 > 0)) && ((d3 > 0 && d4 < 0) || (d3 < 0 && d4 > 0))) ||
-    (d1 == 0 && isOnSegment(x3, y3, x4, y4, x1, y1)) ||
-    (d2 == 0 && isOnSegment(x3, y3, x4, y4, x2, y2)) ||
-    (d3 == 0 && isOnSegment(x1, y1, x2, y2, x3, y3)) ||
-    (d4 == 0 && isOnSegment(x1, y1, x2, y2, x4, y4))
+  (((d1 > 0 && d2 < 0) || (d1 < 0 && d2 > 0)) && ((d3 > 0 && d4 < 0) || (d3 < 0 && d4 > 0))) ||
+  (d1 == 0 && isOnSegment(x3, y3, x4, y4, x1, y1)) ||
+  (d2 == 0 && isOnSegment(x3, y3, x4, y4, x2, y2)) ||
+  (d3 == 0 && isOnSegment(x1, y1, x2, y2, x3, y3)) ||
+  (d4 == 0 && isOnSegment(x1, y1, x2, y2, x4, y4))
 
 let isIntersect rloc1 rloc2 sloc1 sloc2 =
   doLineSegmentsIntersect (float_of_int (fst rloc1), float_of_int (snd rloc1), float_of_int (fst sloc1), float_of_int (snd sloc1), float_of_int (fst rloc2), float_of_int (snd rloc2), float_of_int (fst sloc2), float_of_int (snd sloc2))
 
 let hasIntersectArray r_array s_array =
   let result = ref false in
-    (try (
-      for i = 0 to (Array.length r_array)-1 do
-        for j = i+1 to (Array.length (r_array))-1 do
-          (if isIntersect (snd (r_array).(i)) (snd (r_array).(j)) (snd (s_array).(i)) (snd (s_array).(j)) then
-             (result := true;
-              (raise Ta_Out_of_loop))
-           else
-             ())
-        done
-      done)
-     with Ta_Out_of_loop -> ());
-    !result
+  (try (
+     for i = 0 to (Array.length r_array)-1 do
+       for j = i+1 to (Array.length (r_array))-1 do
+         (if isIntersect (snd (r_array).(i)) (snd (r_array).(j)) (snd (s_array).(i)) (snd (s_array).(j)) then
+            (result := true;
+             (raise Ta_Out_of_loop))
+          else
+            ())
+       done
+     done)
+   with Ta_Out_of_loop -> ());
+  !result
 
 let hasIntersect rList sList rsList=
   let (rl,sl) = List.split rsList in
   let rec sortlst l lst=
     match l with
-      | [] -> []
-      | h::t -> (List.find (fun x -> (fst x) = h) lst)::(sortlst t lst) in
+    | [] -> []
+    | h::t -> (List.find (fun x -> (fst x) = h) lst)::(sortlst t lst) in
   let rList' = sortlst rl rList in
   let sList' = sortlst sl sList in
-    hasIntersectArray (Array.of_list rList') (Array.of_list sList')
+  hasIntersectArray (Array.of_list rList') (Array.of_list sList')
 
 let (robots1, shelters1) =  ([("r1", (54, 92)); ("r2", (94, 25)); ("r3", (29, 22)); ("r4", (57, 54));
                               ("r5", (88, 44)); ("r6", (16, 32)); ("r7", (8, 8)); ("r8", (77, 46));
@@ -153,7 +153,7 @@ let (robots10, shelters10) = ([("r1", (1, 12)); ("r2", (65, 17)); ("r3", (88, 22
 
 let robots11 = [("r1", (1, 1)); ("r2", (1, 99))]
 let shelters11 = [(3, (99, 99)); (4, (99, 1))]
-	 
+
 let robots12 = [("r1", (3, 3))]
 let shelters12 = [(5, (3, 72))]
 
@@ -175,101 +175,101 @@ let shelters17 = [(1, (20, 20)); (2, (19, 20)); (3, (18, 20)); (4, (17, 20)); (5
 let _ =
   output
     (fun () ->
-     let ans = Duststorm.shelterAssign robots1 shelters1 in
-     hasIntersect robots1 shelters1 ans = false)
+       let ans = Duststorm.shelterAssign robots1 shelters1 in
+       hasIntersect robots1 shelters1 ans = false)
 
 let _ =
   output
     (fun () ->
-     let ans = Duststorm.shelterAssign robots2 shelters2 in
-     hasIntersect robots2 shelters2 ans = false)
+       let ans = Duststorm.shelterAssign robots2 shelters2 in
+       hasIntersect robots2 shelters2 ans = false)
 
 let _ =
   output
     (fun () ->
-     let ans = Duststorm.shelterAssign robots3 shelters3 in
-     hasIntersect robots3 shelters3 ans = false)
+       let ans = Duststorm.shelterAssign robots3 shelters3 in
+       hasIntersect robots3 shelters3 ans = false)
 
 let _ =
   output
     (fun () ->
-     let ans = Duststorm.shelterAssign robots4 shelters4 in
-     hasIntersect robots4 shelters4 ans = false)
+       let ans = Duststorm.shelterAssign robots4 shelters4 in
+       hasIntersect robots4 shelters4 ans = false)
 
 let _ =
   output
     (fun () ->
-     let ans = Duststorm.shelterAssign robots5 shelters5 in
-     hasIntersect robots5 shelters5 ans = false)
+       let ans = Duststorm.shelterAssign robots5 shelters5 in
+       hasIntersect robots5 shelters5 ans = false)
 
 let _ =
   output
     (fun () ->
-     let ans = Duststorm.shelterAssign robots6 shelters6 in
-     hasIntersect robots6 shelters6 ans = false)
+       let ans = Duststorm.shelterAssign robots6 shelters6 in
+       hasIntersect robots6 shelters6 ans = false)
 
 let _ =
   output
     (fun () ->
-     let ans = Duststorm.shelterAssign robots7 shelters7 in
-     hasIntersect robots7 shelters7 ans = false)
+       let ans = Duststorm.shelterAssign robots7 shelters7 in
+       hasIntersect robots7 shelters7 ans = false)
 
 let _ =
   output
     (fun () ->
-     let ans = Duststorm.shelterAssign robots8 shelters8 in
-     hasIntersect robots8 shelters8 ans = false)
+       let ans = Duststorm.shelterAssign robots8 shelters8 in
+       hasIntersect robots8 shelters8 ans = false)
 
 let _ =
   output
     (fun () ->
-     let ans = Duststorm.shelterAssign robots9 shelters9 in
-     hasIntersect robots9 shelters9 ans = false)
+       let ans = Duststorm.shelterAssign robots9 shelters9 in
+       hasIntersect robots9 shelters9 ans = false)
 
 let _ =
   output
     (fun () ->
-     let ans = Duststorm.shelterAssign robots10 shelters10 in
-     hasIntersect robots10 shelters10 ans = false)
+       let ans = Duststorm.shelterAssign robots10 shelters10 in
+       hasIntersect robots10 shelters10 ans = false)
 
 let _ =
   output
     (fun () ->
-     let ans = Duststorm.shelterAssign robots11 shelters11 in
-     hasIntersect robots11 shelters11 ans = false)
+       let ans = Duststorm.shelterAssign robots11 shelters11 in
+       hasIntersect robots11 shelters11 ans = false)
 
 let _ =
   output
     (fun () ->
-     let ans = Duststorm.shelterAssign robots12 shelters12 in
-     hasIntersect robots12 shelters12 ans = false)
+       let ans = Duststorm.shelterAssign robots12 shelters12 in
+       hasIntersect robots12 shelters12 ans = false)
 
 let _ =
   output
     (fun () ->
-     let ans = Duststorm.shelterAssign robots13 shelters13 in
-     hasIntersect robots13 shelters13 ans = false)
+       let ans = Duststorm.shelterAssign robots13 shelters13 in
+       hasIntersect robots13 shelters13 ans = false)
 
 let _ =
   output
     (fun () ->
-     let ans = Duststorm.shelterAssign robots14 shelters14 in
-     hasIntersect robots14 shelters14 ans = false)
+       let ans = Duststorm.shelterAssign robots14 shelters14 in
+       hasIntersect robots14 shelters14 ans = false)
 
 let _ =
   output
     (fun () ->
-     let ans = Duststorm.shelterAssign robots15 shelters15 in
-     hasIntersect robots15 shelters15 ans = false)
+       let ans = Duststorm.shelterAssign robots15 shelters15 in
+       hasIntersect robots15 shelters15 ans = false)
 
 let _ =
   output
     (fun () ->
-     let ans = Duststorm.shelterAssign robots16 shelters16 in
-     hasIntersect robots16 shelters16 ans = false)
+       let ans = Duststorm.shelterAssign robots16 shelters16 in
+       hasIntersect robots16 shelters16 ans = false)
 
 let _ =
   output
     (fun () ->
-     let ans = Duststorm.shelterAssign robots17 shelters17 in
-     hasIntersect robots17 shelters17 ans = false)
+       let ans = Duststorm.shelterAssign robots17 shelters17 in
+       hasIntersect robots17 shelters17 ans = false)

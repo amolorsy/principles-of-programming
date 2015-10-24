@@ -51,7 +51,7 @@ let exp_eval (e:exp) (inputs:int list) : int = fst (exp_eval_rec e inputs)
 
 let rec cmd_eval_rec
     (c:cmd list) (idx:int) (inputs:int list) (m:var->int) (tg:tag->int)
-    : int = 
+  : int = 
   match List.nth c idx with
   | HasNum (x,i) -> 
     let new_m = fun k -> if k = x then i else m k in
@@ -77,7 +77,7 @@ let rec cmd_eval_rec
   | Seq _ -> failwith "cmd_eval_rec:seq"
 
 let rec make_cl_rec (c:cmd) (tg:tag->int) (idx:int) 
-    : cmd list * (tag->int) * int = 
+  : cmd list * (tag->int) * int = 
   match c with
   | HasNum _
   | HasVar _
@@ -106,7 +106,7 @@ let cmd_eval (c:cmd) (inputs:int list) : int =
   cmd_eval_rec cl 0 inputs (fun _ -> raise NoBind) tg
 
 let pt i =
-	print_endline (string_of_int i)
+  print_endline (string_of_int i)
 
 let e1 = Repeat(Num 10,Num 3)
 let _ = pt (exp_eval e1 [])

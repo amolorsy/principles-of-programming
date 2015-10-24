@@ -2,7 +2,7 @@ open CommonGrade
 open Hw6_4
 
 let _ = output (fun () ->
-  (eval (IMPLY (ORELSE (FALSE, LESS (NUM 0, (PLUS (NUM (-1), NUM 0)))), FALSE))));;
+    (eval (IMPLY (ORELSE (FALSE, LESS (NUM 0, (PLUS (NUM (-1), NUM 0)))), FALSE))));;
 
 let f p q = eval (ANDALSO (p, (ORELSE (q, (ANDALSO ((NOT p), (NOT q)))))));; 
 let r_f p q = not (f p q);; 
