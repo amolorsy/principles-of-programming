@@ -3,5 +3,8 @@ compiled/
 *.out
 *.bak
 
+*.mll
+*.mli
+*.mly
 *.cmi
 *.cmo

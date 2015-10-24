@@ -1,0 +1,6 @@
+#!/bin/bash
+
+rm *.cmi *.cmo
+rm exp_lexer.ml exp_parser.ml exp_parser.mli 
+rm cmd_lexer.ml cmd_parser.ml cmd_parser.mli
+rm main check_cmd check_exp
